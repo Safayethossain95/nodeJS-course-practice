@@ -1,0 +1,25 @@
+require('dotenv').config('../.env')
+const express = require('express')
+const { notFoundHandler, errorHandler } = require('./error.js')
+const app = express()
+
+// const myDB = require('../db/db.js')
+// myDB.create('user 1',10)
+// myDB.create('user 2',10)
+// myDB.create('user 3',10)
+// myDB.create('user 4',10)
+// myDB.create('user 5',10)
+// myDB.bulkCreate('user 6',10,5)
+// const tickets = myDB.find()
+// console.log(tickets)
+// const winners=myDB.draw(2)
+
+
+app.use(require('./middleware.js'))
+app.use(require('./routes.js'))
+
+app.use(notFoundHandler)
+
+app.use(errorHandler)
+
+module.exports = app 
