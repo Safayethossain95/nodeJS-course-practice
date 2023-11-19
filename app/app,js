@@ -1,7 +1,19 @@
 require('dotenv').config('../.env')
 const express = require('express')
+const mongoose = require('mongoose')
 const { notFoundHandler, errorHandler } = require('./error.js')
 const app = express()
+
+
+mongoose.connect('mongodb+srv://mern:mern@cluster0.ujhuxyr.mongodb.net/test2?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true })
+    .then(() => {
+        app.listen(4545, () => {
+            console.log("application is ready to serve on port 4545");
+        });
+    })
+    .catch((e) => {
+        console.log(e);
+    });
 
 // const myDB = require('../db/db.js')
 // myDB.create('user 1',10)
@@ -13,6 +25,10 @@ const app = express()
 // const tickets = myDB.find()
 // console.log(tickets)
 // const winners=myDB.draw(2)
+const db = mongoose.connection;
+
+const collection = db.collection("test2");
+collection.deleteOne({name:"safayet",age:28});
 
 
 app.use(require('./middleware.js'))
