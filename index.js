@@ -1,32 +1,27 @@
 const mongoose = require("mongoose")
+const express = require('express')
 
-const personSchema = new mongoose.Schema({
-    firstName:String,
-    lastName:String,
-    email:String,
-    age:String,
-    bio:String,
-    single:Boolean,
-})
+const app = express()
+const cors = require('cors')
 
-const Person = mongoose.model('Person', personSchema)
+app.use(cors({
+    origin:'*'
+}));
 
-mongoose.connect('mongodb://127.0.0.1:27017/prac' , {
-    serverSelectionTimeoutMS:10,
-})
+
+
+mongoose.connect('mongodb://127.0.0.1:27017/react_backend')
 .then(async ()=>{
     console.log('Database Connected')
-    const person = new Person({
-        firstName:'alvi',
-        lastName:'roy'
-    })
-    await person.save()
-    console.log("person created")
-    console.log(person)
 })
 .catch((e)=>{
     console.log(e)
 })
-.finally(()=>{
-    mongoose.connection.close()
+
+const post_route = require('./routes/postRoute')
+app.use('/api',post_route)
+
+app.listen(8000, function(){
+    console.log("Server is running");
+    
 })
