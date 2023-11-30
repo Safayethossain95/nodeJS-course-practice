@@ -48,7 +48,8 @@ const updatePost = async(req,res)=>{
         }else{
             var id = req.body.id
             var title = req.body.title
-            var date = req.body.date            
+            var date = req.body.date  
+            console.log(title)          
             await Post.findByIdAndUpdate({_id:id},{$set:{title:title,date:date}})
             res.status(200).send({success:true,msg:"Post Updated Successfully"})
         }
